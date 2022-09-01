@@ -25,6 +25,8 @@ public class JogoDaVelhaVisual extends ConsoleDisplay {
             }
             velhaLinha();
         }
+
+        printBr("");
     }
 
     private void velhaLinha() {
