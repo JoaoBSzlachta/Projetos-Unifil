@@ -1,5 +1,7 @@
 package Utils;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Scanner;
 
 public abstract class ConsoleDisplay {
@@ -7,17 +9,17 @@ public abstract class ConsoleDisplay {
         System.out.print(conteudo);
     }
 
-    public static void printBr(String conteudo) {
+    public static void printBr(String... conteudo) {
         System.out.println(conteudo);
     }
 
-    protected static void linha(int length) {
+    protected void linha(int length) {
         for (int i = 0; i < length; i++) {
             print("_");
         }
     }
 
-    public int read(String conteudo) {
+    public static int read(String conteudo) {
         System.out.println("> " + conteudo);
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();

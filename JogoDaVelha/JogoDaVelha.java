@@ -3,62 +3,60 @@ package JogoDaVelha;
 public class JogoDaVelha {
     protected String[][] velha = new String[3][3];
     protected boolean won = false;
+    protected boolean jogador = false;
     protected int maxJogadas = 9;
     protected int jogadas = 0;
-    protected int jogador = 0;
 
     public JogoDaVelha() {
-        while (won || jogadas < maxJogadas) {
-            JogoDaVelhaVisual visual = new JogoDaVelhaVisual(velha);
-            visual.mountJogoDaVelha();
+        // enquanto nao houver vencedor e num de jogadas n superar o max de jogadas permitido
+        while (!won || jogadas < maxJogadas) {
+            new JogoDaVelhaVisual(velha).mountJogoDaVelha();
 
+            // se jogada for valida, continue o loop
             if (jogada()) jogadas++;
 
-            if (ganhou()) break;
+            // checando ganhador
+            checarGanhador();
         }
     }
 
     private boolean jogada() {
-        JogoDaVelhaVisual visual = new JogoDaVelhaVisual(velha);
+        int linha = JogoDaVelhaVisual.read("Linha: ");
+        int coluna = JogoDaVelhaVisual.read("Coluna: ");
 
-        int linha = visual.read("Linha: ");
-        int coluna = visual.read("Coluna: ");
-
+        // caso, casa ja esteja ocupada
         if (casaOcupada(velha[linha][coluna])) {
-            visual.printBr("Casa Ocupada !!!");
+            JogoDaVelhaVisual.printBr("Casa Ocupada !!!");
             return false;
         }
 
-        if (jogador == 0) {
+        // gravando jogada de acordo com o jogador
+        if (jogador) {
             velha[linha][coluna] = "X";
-            jogador = 1;
         } else {
             velha[linha][coluna] = "O";
-            jogador = 0;
         }
+        // alternando jogadores
+        jogador = !jogador;
 
         return true;
     }
 
     private boolean casaOcupada(String casa) {
         // se casa estiver ocupada
-        if (casa != null) {
-            return true;
-        }
-
-        return false;
+        return casa != null;
     }
 
-    private boolean ganhou() {
+    private boolean checarGanhador() {
         boolean is = false;
         for (int i = 0; i < velha.length; i++) {
             if (velha[i][0] == velha[i][1] && velha[i][1] == velha[i][2] && jogadas > 1) {
-              return true;
+              won = true;
             }
             //for (int j = 0; j < velha.length; j++) {
             //}
         }
 
-        return false;
+        return won;
     }
 }

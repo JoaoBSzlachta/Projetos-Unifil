@@ -10,10 +10,10 @@ public class JogoDaVelhaVisual extends ConsoleDisplay {
     }
 
     public void mountJogoDaVelha() {
-        velhaLinha();
+        linha();
 
         for (int i = 0; i < velha.length; i++) {
-            printBr("");
+            printBr();
 
             for (int j = 0; j < velha[i].length; j++) {
                 if (velha[i][j] == null) {
@@ -23,14 +23,15 @@ public class JogoDaVelhaVisual extends ConsoleDisplay {
 
                 print("| " + velha[i][j] + " |");
             }
-            velhaLinha();
+            linha();
         }
 
-        printBr("");
+        printBr();
     }
 
-    private void velhaLinha() {
-        printBr("");
-        linha(velha.length * 5);
+    // pseudo @Override
+    protected void linha() {
+        printBr();
+        super.linha(velha.length * 5);
     }
 }
