@@ -4,12 +4,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Scanner;
 
-public abstract class ConsoleDisplay {
+public class ConsoleDisplay {
     public static void print(String conteudo) {
         System.out.print(conteudo);
     }
 
-    public static void printBr(String... conteudo) {
+    public static void printBr(String conteudo) {
         System.out.println(conteudo);
     }
 

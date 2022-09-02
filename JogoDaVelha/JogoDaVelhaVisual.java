@@ -13,7 +13,7 @@ public class JogoDaVelhaVisual extends ConsoleDisplay {
         linha();
 
         for (int i = 0; i < velha.length; i++) {
-            printBr();
+            printBr("");
 
             for (int j = 0; j < velha[i].length; j++) {
                 if (velha[i][j] == null) {
@@ -26,12 +26,16 @@ public class JogoDaVelhaVisual extends ConsoleDisplay {
             linha();
         }
 
-        printBr();
+        printBr("");
     }
 
     // pseudo @Override
     protected void linha() {
-        printBr();
+        printBr("");
         super.linha(velha.length * 5);
+    }
+
+    public void mostrarGanhador() {
+        print("Alguém Ganhou!!!");
     }
 }
