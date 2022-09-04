@@ -1,17 +1,21 @@
+import Jogador.Jogador;
 import JogoDaVelha.JogoDaVelha;
 import JogoDaVelha.JogoDaVelhaVisual;
+import Velha.Velha;
 
 public class Main {
     public static void main(String[] args) {
-        JogoDaVelha jogoDaVelha = new JogoDaVelha();
-        boolean estado =  jogoDaVelha.jogar();
+        Jogador[] jogadores = new Jogador[]{
+                new Jogador('X', null),
+                new Jogador('O', null),
+        };
+
+        JogoDaVelha jogoDaVelha = new JogoDaVelha(jogadores, new Velha(3, 3));
+
+        boolean estado = jogoDaVelha.jogar();
 
         if (!estado) {
             System.out.println("[ Deu Velha ]");
         }
-
-        new JogoDaVelhaVisual(jogoDaVelha.velha).mountJogoDaVelha();
-
-        return;
     }
 }

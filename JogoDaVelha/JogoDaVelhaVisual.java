@@ -1,22 +1,25 @@
 package JogoDaVelha;
 
 import Utils.ConsoleDisplay;
+import Velha.Velha;
 
 public class JogoDaVelhaVisual extends ConsoleDisplay {
-    private String[][] velha;
+    private Velha velha;
 
-    public JogoDaVelhaVisual(String velha[][]) {
+    public JogoDaVelhaVisual(Velha velha) {
         this.velha = velha;
     }
 
-    public void mountJogoDaVelha() {
+    public void mount() {
         linha();
+
+        Character[][] velha = this.velha.getVelha();
 
         for (int i = 0; i < velha.length; i++) {
             printBr("");
 
-            for (int j = 0; j < velha[i].length; j++) {
-                if (velha[i][j] == null) {
+            for (int j = 0; j < velha.length; j++) {
+                if (this.velha.casa(i, j) == null) {
                     print("| * |");
                     continue;
                 }
@@ -32,7 +35,7 @@ public class JogoDaVelhaVisual extends ConsoleDisplay {
     // pseudo @Override
     protected void linha() {
         printBr("");
-        super.linha(velha.length * 5);
+        super.linha(velha.getVelha().length * 5);
     }
 
     public void mostrarGanhador() {

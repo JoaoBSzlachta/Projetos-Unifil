@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Scanner;
 
 public class ConsoleDisplay {
-    public static void print(String conteudo) {
+    public void print(String conteudo) {
         System.out.print(conteudo);
     }
 
