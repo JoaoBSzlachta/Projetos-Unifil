@@ -1,6 +1,5 @@
 import Jogador.Jogador;
 import JogoDaVelha.JogoDaVelha;
-import JogoDaVelha.JogoDaVelhaVisual;
 import Velha.Velha;
 
 public class Main {

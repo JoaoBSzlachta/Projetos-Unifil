@@ -27,6 +27,7 @@ public class JogoDaVelha extends JogoDaVelhaEstado {
             // checando ganhador
             if (velha.checarVencedor()) {
                 new JogoDaVelhaVisual(velha).mostrarGanhador();
+                new JogoDaVelhaVisual(velha).mount();
                 return true;
             }
         }
