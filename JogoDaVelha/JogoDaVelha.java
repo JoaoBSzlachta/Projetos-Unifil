@@ -1,37 +1,78 @@
 package JogoDaVelha;
 
-import Jogador.Jogador;
+import Regras.VencedorRegra;
 import Utils.ConsoleDisplay;
-import Velha.Velha;
 
-public class JogoDaVelha extends JogoDaVelhaEstado {
+public class JogoDaVelha extends Estado {
 
-    public JogoDaVelha(Jogador[] jogadores, Velha velha) {
-        super(jogadores, velha);
-    }
+    // Algumas propriedades declaradas no pai [Estado]
 
-    public boolean jogar() {
-        while (avancarJogada()) {
-            ConsoleDisplay.printBr("[ Jogador Atual: " + jogadorAtual().getSkin() + " ]" );
+    public Character[][] jogar() {
+        // enquanto jogadaAtual for menor que o maximo de jogadas
+        while (jogadaAtual < maxJogadas) {
+            Visual.clear();
 
-            new JogoDaVelhaVisual(velha).mount();
+            // printando o jogador atual
+            ConsoleDisplay.printBr("");
+            ConsoleDisplay.printBr("ℹ Jogador Atual: \"" + jogadorAtual + "\"" );
 
-            // se jogada for valida, continue o loop
-            // if (jogadorAtual().jogada() != null) jogadas++;
-            int[] linhaColuna = jogadorAtual().jogada();
-            if (linhaColuna == null) continue;
-            else {
-                velha.put(linhaColuna[0], linhaColuna[1], jogadorAtual().getSkin());
+            // montando o Visual da Velha
+            Visual.mount(this.velha);
+
+            // se jogada nao for valida... pule o loop.
+            // deste jeito o jogador nao perde a vez e o loop mantem a jogada atual
+            if (!jogada()) {
+                continue;
             }
 
             // checando ganhador
-            if (velha.checarVencedor()) {
-                new JogoDaVelhaVisual(velha).mostrarGanhador();
-                new JogoDaVelhaVisual(velha).mount();
-                return true;
+            VencedorRegra vencedorRegra = new VencedorRegra(velha);
+            Character ganhador = vencedorRegra.checarRegra();
+            // caso alguem tenha ganho
+            if (ganhador != null) {
+                // execute a funcao ganhou
+                ganhou();
+                // parando o loop
+                return velha;
             }
+
+            // avancando a jogada
+            avancarJogada();
+        }
+        velha();
+
+        return velha;
+    }
+
+    private void velha() {
+        Visual.digiteEnter("[ \uD83D\uDC75 Deu Velha !!! ]");
+    }
+
+    private boolean jogada() {
+        // try catch para prevenir erro de linha ou coluna fora da velha
+        try {
+            int linha = Visual.read("Digite a Linha para inserir");
+            int coluna = Visual.read("Digite a Coluna para inserir");
+
+            // caso casa ja esteja ocupada na velha
+            if (velha[linha][coluna] != null) {
+                Visual.digiteEnter("[ \uD83D\uDD12 Casa ocupada !!! ]");
+                return false;
+            }
+
+            // colocando jogada do jogador atual na velha
+            this.velha[linha][coluna] = jogadorAtual;
+            // retornando true como retorno de sucesso da funcao
+            return true;
+        } catch (Exception e) {
+            Visual.digiteEnter("[ ⚠️Linha ou coluna não existem nesta velha !!! ]");
         }
 
         return false;
+    }
+
+    private void ganhou() {
+        Visual.mostrarGanhador(jogadorAtual);
+        Visual.mount(velha);
     }
 }
