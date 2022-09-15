@@ -1,8 +1,6 @@
 package JogoDaVelha;
 
 import Utils.ConsoleDisplay;
-
-import java.io.IOException;
 import java.util.Scanner;
 
 // Classe usada apenas para visual
