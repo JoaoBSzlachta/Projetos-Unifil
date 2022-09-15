@@ -2,6 +2,7 @@ package JogoDaVelha;
 
 import Regras.VencedorRegra;
 import Utils.ConsoleDisplay;
+import Utils.GerarEmpateVelha;
 
 public class JogoDaVelha extends Estado {
 
@@ -45,13 +46,24 @@ public class JogoDaVelha extends Estado {
     }
 
     private void velha() {
-        Visual.digiteEnter("[ \uD83D\uDC75 Deu Velha !!! ]");
+        Visual.printBr("");
+        Visual.printBr("[ \uD83D\uDC75 Deu Velha !!! ]");
+        Visual.mount(this.velha);
     }
 
     private boolean jogada() {
         // try catch para prevenir erro de linha ou coluna fora da velha
         try {
             int linha = Visual.read("Digite a Linha para inserir");
+
+            // caso linha seja 777 ativar 'velha automatica'
+            // gerando a velha via funcao
+            if (linha == 777) {
+                GerarEmpateVelha.gerar(this.velha);
+                jogadaAtual = maxJogadas + 1;
+                return true;
+            }
+
             int coluna = Visual.read("Digite a Coluna para inserir");
 
             // caso casa ja esteja ocupada na velha
